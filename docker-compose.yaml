@@ -1,0 +1,29 @@
+version: '3.7'
+
+services:
+  postgis:
+    image: "postgis/postgis:${POSTGIS_TAG}"
+    container_name: postgis
+    hostname: postgis
+    restart: unless-stopped
+    stop_grace_period: 10s
+    environment:
+      POSTGRES_DB: $DB_NAME
+      POSTGRES_PASSWORD: $DB_PASSWORD
+      POSTGRES_USER: $DB_USER
+    ports:
+      - ${DB_PORT}:5432
+    volumes:
+      - postgis-data:/var/lib/postgresql/data
+  
+  # adminer:
+  #   image: "adminer:${ADMINER_TAG}"
+  #   container_name: adminer
+  #   hostname: adminer
+  #   restart: unless-stopped
+  #   stop_grace_period: 10s
+  #   ports:
+  #     - ${ADMINER_PORT}:8080
+
+volumes:
+  postgis-data:
